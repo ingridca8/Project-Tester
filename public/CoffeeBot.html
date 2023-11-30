@@ -13,17 +13,17 @@ body {
   background-attachment: fixed;  
   background-size: cover;
 }
-     center-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
-}
+     div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+    }
 </style> 
 </head>
 <body>
-  <div class="center-screen">
+  <div>
   <h1>My First Bootstrap Page</h1>
   <p>This container has a dark background color and a white text, and some extra padding and margins.</p>
   </div>
