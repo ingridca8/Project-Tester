@@ -89,6 +89,15 @@
         color: #3B322C;
     }
 
+    .form select {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 8px;
+        border: 1px solid #d0c7b9;
+        background-color: rgba(255, 255, 255, 0.8);
+        font-family: 'Lora', serif;
+        color: #3B322C;
+    }
 
     .brand {
       display:flex;
@@ -356,7 +365,19 @@
         </div>
 
         <label for="genre">Género</label>
-        <input id="genre" name="genre">
+        <select id="genre">
+            <option value="">Selecciona un género</option>
+            <option value="Ficción">Ficción</option>
+            <option value="No Ficción">No Ficción</option>
+            <option value="Poesía">Poesía</option>
+            <option value="Ensayo">Ensayo</option>
+            <option value="Historia">Historia</option>
+            <option value="Filosofía">Filosofía</option>
+            <option value="Ciencia">Ciencia</option>
+            <option value="Arte">Arte</option>
+            <option value="Biografía">Biografía</option>
+            <option value="Otro">Otro</option>
+        </select>
 
         <label for="status">Estado</label>
         <select id="status" name="status">
