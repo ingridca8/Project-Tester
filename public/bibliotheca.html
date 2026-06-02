@@ -27,13 +27,6 @@
     html,body{height:100%; margin:0; font-family:Lora, serif; background:var(--ivory); color:var(--ink); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 
     /* subtle paper texture built with layered gradients (no external image) */
-    body::before{
-      content:"";
-      position:fixed; inset:0; z-index:-2;
-      background:
-        linear-gradient(180deg, #d8d2c8, #ede6dc);
-      pointer-events:none;
-    }
     body::after{
       content:"";
       position:fixed; inset:0; z-index:-1; opacity:0.25;
