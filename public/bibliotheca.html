@@ -430,7 +430,9 @@
     }
 
     // init supabase
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let books = [];
 
