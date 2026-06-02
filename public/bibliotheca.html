@@ -385,6 +385,18 @@
           <option>Reading</option>
           <option>Read</option>
         </select>
+        
+        <label>Editorial</label>
+        <input id="editorial">
+
+        <label>Idioma</label>
+        <input id="language">
+
+        <label>Páginas</label>
+        <input id="pages" type="number">
+
+        <label>Rating</label>
+        <input id="grade" type="number" min="1" max="5">
 
         <label for="notes">Notas</label>
         <textarea id="notes" name="notes"></textarea>
@@ -555,7 +567,12 @@
         author: (document.getElementById('author').value || '').trim(),
         isbn: (document.getElementById('isbn').value || '').trim() || null,
         genre: (document.getElementById('genre').value || '').trim() || null,
+        editorial: null,   // aún no lo tienes en el form
         year: parseInt(document.getElementById('year').value) || null,
+        language: null,    // opcional
+        pages: null,       // opcional
+        read_at: null, 
+        grade: null,       // opcional (rating)
         status: (document.getElementById('status').value || 'Unread'),
         notes: (document.getElementById('notes').value || '').trim() || null
       };
