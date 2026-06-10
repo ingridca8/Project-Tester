@@ -14,25 +14,17 @@ const fabBtn = document.getElementById("fabBtn");
 
 // cargar libros desde Supabase
 async function fetchBooks() {
-  try {
-    const { data, error } = await supabaseClient
-      .from("books")
-      .select("*")
-      .order("created_at", { ascending: false });
+  const { data, error } = await supabaseClient
+    .from("books")
+    .select("*");
 
-    if (error) {
-      console.error("Error cargando libros:", error);
-      return;
-    }
+  console.log("ERROR:", error);
+  console.log("RAW DATA:", data);
 
-    books = data || [];
-    console.log("DATA:", books); // debug
-
-    render();
-  } catch (err) {
-    console.error("Error inesperado:", err);
-  }
+  books = data || [];
+  render();
 }
+
 
 // renderizar catálogo
 function render() {
