@@ -1,61 +1,54 @@
 let books = [];
-let editingId = null;
-let currentOwner = "me";
-
-// refs
-const catalog = document.getElementById("catalog");
-const form = document.getElementById("addForm");
-const overlay = document.getElementById("overlay");
-
-// tabs
-document.querySelectorAll('.tab').forEach(btn=>{
-  btn.onclick = () => {
-    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    currentOwner = btn.dataset.owner;
-    render();
-  };
-});
-
-async function fetchBooks() {
-  const { data } = await supabaseClient.from("books").select("*");
+letbooks").select("*");let editingId = null;
   books = data || [];
   render();
 }
 
-function render() {
+function render(){
   catalog.innerHTML = "";
 
-  const filtered = books.filter(b => b.owner === currentOwner);
+  const search = searchInput.value.toLowerCase();
 
-  filtered.forEach(b=>{
-    const el = createCard(b);
-    catalog.appendChild(el);
-  });
+  books
+    .filter(b =>
+      (b.title || "").toLowerCase().includes(search) ||
+      (b.author || "").toLowerCase().includes(search)
+    )
+    .forEach(b=>{
+      catalog.appendChild(createCard(b));
+    });
 
-  updateStats();
+  document.getElementById("totalBooks").textContent = books.length;
+  document.getElementById("booksRead").textContent =
+    books.filter(b=>b.status==="Read").length;
+  document.getElementById("booksReading").textContent =
+    books.filter(b=>b.status==="Reading").length;
 }
 
-form.onsubmit = async (e) => {
+searchInput.oninput = render;
+
+// abrir modal
+fabBtn.onclick = ()=> overlay.classList.add("open");
+
+form.onsubmit = async e=>{
   e.preventDefault();
 
   const book = {
-    title: title.value,
-    author: author.value,
-    isbn: isbn.value,
-    year: parseInt(year.value),
-    genre: genre.value,
-    status: status.value,
-    notes: notes.value,
-    editorial: editorial.value,
-    language: language.value,
-    pages: parseInt(pages.value),
-    grade: parseInt(grade.value),
-    owner: currentOwner
+    title:title.value,
+    author:author.value,
+    genre:genre.value,
+    year:parseInt(year.value),
+    editorial:editorial.value,
+    language:language.value,
+    pages:parseInt(pages.value),
+    isbn:isbn.value,
+    grade:parseInt(grade.value),
+    status:status.value,
+    notes:notes.value
   };
 
-  if (editingId) {
-    await supabaseClient.from("books").update(book).eq("id", editingId);
+  if(editingId){
+    await supabaseClient.from("books").update(book).eq("id",editingId);
     editingId = null;
   } else {
     await supabaseClient.from("books").insert([book]);
@@ -63,47 +56,30 @@ form.onsubmit = async (e) => {
 
   overlay.classList.remove("open");
   form.reset();
+
   fetchBooks();
 };
 
-async function deleteBook(id){
-  await supabaseClient.from("books").delete().eq("id", id);
-  fetchBooks();
-}
+function editBook(b){
+  editingId = b.id;
 
-async function toggle(id){
-  const book = books.find(b=>b.id == id);
-  const next = book.status === "Unread" ? "Reading" : "Read";
-  await supabaseClient.from("books").update({status:next}).eq("id",id);
-  fetchBooks();
-}
-
-function openEdit(book){
-  editingId = book.id;
-
-  title.value = book.title;
-  author.value = book.author;
-  isbn.value = book.isbn;
-  year.value = book.year;
-  genre.value = book.genre;
-  status.value = book.status;
-  notes.value = book.notes;
-  editorial.value = book.editorial;
-  language.value = book.language;
-  pages.value = book.pages;
-  grade.value = book.grade;
+  Object.keys(b).forEach(key=>{
+    const el = document.getElementById(key);
+    if(el) el.value = b[key] || "";
+  });
 
   overlay.classList.add("open");
 }
 
-// abrir modal
-fabBtn.onclick = () => overlay.classList.add("open");
-
-// stats
-function updateStats(){
-  document.getElementById("totalBooks").textContent = books.length;
-  document.getElementById("booksRead").textContent = books.filter(b=>b.status==="Read").length;
-  document.getElementById("booksReading").textContent = books.filter(b=>b.status==="Reading").length;
+async function deleteBook(id){
+  await supabaseClient.from("books").delete().eq("id",id);
+  fetchBooks();
 }
 
 fetchBooks();
+
+const catalog = document.getElementById("catalog");
+const form = document.getElementById("addForm");
+const overlay = document.getElementById("overlay");
+
+async function fetchBooks(){
