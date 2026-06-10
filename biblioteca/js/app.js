@@ -1,3 +1,12 @@
+// cargar al inicio
+fetchBooks();
+let books = [];
+let editingId = null;
+
+// referencias del DOM
+const catalog = document.getElementById("catalog");
+const form = document.getElementById("addForm");
+
 // estado global// estado globalForm");
 const overlay = document.getElementById("overlayForm");
 const searchInput = document.getElementById("searchInput");
@@ -152,15 +161,3 @@ async function deleteBook(id) {
   }
 }
 
-// cargar al inicio
-fetchBooks();
-let books = [];
-let editingId = null;
-
-// referencias del DOM
-const catalog = document.getElementById("catalog");
-
-const form = document.getElementById("addForm");
-const overlay = document.getElementById("overlayForm");
-const searchInput = document.getElementById("searchInput");
-const fabBtn = document.getElementById("fabBtn");
