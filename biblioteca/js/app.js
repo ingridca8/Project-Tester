@@ -159,3 +159,8 @@ let editingId = null;
 
 // referencias del DOM
 const catalog = document.getElementById("catalog");
+
+const form = document.getElementById("addForm");
+const overlay = document.getElementById("overlayForm");
+const searchInput = document.getElementById("searchInput");
+const fabBtn = document.getElementById("fabBtn");
