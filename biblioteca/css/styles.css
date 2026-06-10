@@ -1,87 +1,79 @@
-body {
-  background:#1e1a17;
-  color:#e6dccf;
-  font-family:Lora;
-  margin:0;
+body, html {
+  font-family: "Raleway", sans-serif;
+  height:100%;
+;  margin:0;
+  background-position:center;
 }
 
-.page {
-  max-width:900px;
-  margin:auto;
-  padding:20px;
+/* capa oscura */
+.overlay {
+  background:rgba(0,0,0,0.7);
+  min-height:100vh;
+  padding:40px;
+  color:white;
 }
 
-h1 {
-  font-family:'Playfair Display';
-  color:#d6b370;
-}
-
-.tagline {
-  color:#a89b8d;
+.header {
+  text-align:center;
+  margin-bottom:20px;
 }
 
 .catalog {
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-  gap:15px;
+  gap:20px;
 }
 
+/* 👉 tarjetas negras tipo botón */
 .card {
-  background:#2a2521;
-  border:1px solid #3b342f;
-  border-radius:12px;
+  background:#111;
   padding:15px;
+  border-radius:10px;
+  border:1px solid #333;
 }
 
 .card h3 {
-  font-family:'Playfair Display';
-  color:#f5e6c8;
   margin:0;
 }
 
-.meta {
-  color:#cbbda7;
-}
-
-.details {
-  font-size:13px;
-  color:#a89b8d;
-}
-
-button {
-  background:#a3874a;
-  border:none;
-  padding:6px 10px;
-  color:#1e1a17;
-  cursor:pointer;
-  margin-top:5px;
-}
-
-#fabBtn {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  font-size:20px;
-  border-radius:50%;
-}
-
-#overlay {
-  display:none;
-}
-#overlay.open {
+/* stats */
+.stats {
   display:flex;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
+  gap:30px;
+  justify-content:center;
+  margin:20px 0;
 }
 
-form {
-  background:#2a2521;
-  margin:auto;
+/* botón add */
+.fab {
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  font-size:20px;
+}
+
+/* modal */
+.form-box {
+  background:#111;
+  color:white;
   padding:20px;
 }
 
-input, textarea, select {
+.form-box input,
+.form-box textarea,
+.form-box select {
   width:100%;
   margin-bottom:10px;
+  padding:8px;
+  background:#222;
+  border:1px solid #444;
+  color:white;
 }
+}
+
+/* fondo */
+.bgimg {
+  background-image:url("tu-fondo.jpg");
