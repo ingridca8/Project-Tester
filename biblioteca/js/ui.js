@@ -4,30 +4,20 @@ function createCard(b){
   card.className = "card";
 
   card.innerHTML = `
-    <h3>${b.title}</h3>
-    <div class="meta">${b.author}</div>
+    <h3>${b.title || ''}</h3>
+    <p>${b.author || ''}</p>
 
-    <div class="details">
-      ${b.genre || ''} • ${b.year || ''}
-    </div>
+    <p>${b.genre || ''} ${b.year || ''}</p>
 
     <p>${b.notes || ''}</p>
 
-    <details>
-      <summary>Detalles</summary>
-      <p>Editorial: ${b.editorial || '-'}</p>
-      <p>Idioma: ${b.language || '-'}</p>
-      <p>Páginas: ${b.pages || '-'}</p>
-      <p>ISBN: ${b.isbn || '-'}</p>
-      <p>Rating: ${b.grade || '-'}</p>
-    </details>
-
-    <p><b>${b.status}</b></p>
-
-    <button onclick='editBook(${JSON.stringify(b)})'>Editar</button>
-    <button onclick='deleteBook(${b.id})'>Borrar</button>
+    <button class="edit-btn">Editar</button>
+    <button class="delete-btn w3-black">Borrar</button>
   `;
+
+  // eventos seguros
+  card.querySelector(".edit-btn").onclick = () => editBook(b);
+  card.querySelector(".delete-btn").onclick = () => deleteBook(b.id);
 
   return card;
 }
-``
