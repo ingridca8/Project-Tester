@@ -1,13 +1,23 @@
 body {
-  font-family: Lora;
-  background: #FDFBF7;
+  background:#1e1a17;
+  color:#e6dccf;
+  font-family:Lora;
   margin:0;
 }
 
 .page {
-  max-width:1000px;
+  max-width:900px;
   margin:auto;
   padding:20px;
+}
+
+h1 {
+  font-family:'Playfair Display';
+  color:#d6b370;
+}
+
+.tagline {
+  color:#a89b8d;
 }
 
 .catalog {
@@ -17,48 +27,61 @@ body {
 }
 
 .card {
-  background:white;
+  background:#2a2521;
+  border:1px solid #3b342f;
+  border-radius:12px;
   padding:15px;
-  border-radius:10px;
 }
 
-.tabs {
-  display:flex;
-  gap:10px;
-  margin:10px 0;
+.card h3 {
+  font-family:'Playfair Display';
+  color:#f5e6c8;
+  margin:0;
 }
 
-.tab {
-  padding:8px;
+.meta {
+  color:#cbbda7;
+}
+
+.details {
+  font-size:13px;
+  color:#a89b8d;
+}
+
+button {
+  background:#a3874a;
   border:none;
+  padding:6px 10px;
+  color:#1e1a17;
   cursor:pointer;
+  margin-top:5px;
 }
 
-.tab.active {
-  background:#A3874A;
-  color:white;
-}
-
-.fab {
+#fabBtn {
   position:fixed;
   bottom:20px;
   right:20px;
+  font-size:20px;
+  border-radius:50%;
 }
 
-.overlay {
+#overlay {
   display:none;
 }
-.overlay.open {
+#overlay.open {
   display:flex;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.5);
 }
 
-.modal {
-  background:white;
-  padding:20px;
+form {
+  background:#2a2521;
   margin:auto;
+  padding:20px;
 }
 
-details {
-  margin-top:10px;
+input, textarea, select {
+  width:100%;
+  margin-bottom:10px;
 }
-
