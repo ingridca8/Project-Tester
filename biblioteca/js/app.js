@@ -1,5 +1,5 @@
 // cargar al inicio
-fetchBooks();
+
 let books = [];
 let editingId = null;
 
