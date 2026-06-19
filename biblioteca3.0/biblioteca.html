@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bibliotheca - Biblioteca</title>
     
+    <!-- 1️⃣ Primero cargar Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 2️⃣ Luego los estilos -->
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+    <!-- Menú de navegación -->
     <div class="nav-container">
         <nav>
             <button class="hamburger" aria-label="Menú">☰</button>
@@ -26,7 +30,7 @@
             📖 Mi Biblioteca
         </h1>
 
-        <!-- Controles: búsqueda y filtros -->
+        <!-- Controles -->
         <div class="controls">
             <input type="text" id="searchInput" placeholder="🔍 Buscar por título, autor o género...">
             <select id="genreFilter">
@@ -44,10 +48,10 @@
         <div id="booksContainer" class="books-grid"></div>
     </main>
 
-    <!-- Botón flotante para agregar -->
+    <!-- Botón flotante -->
     <button class="fab" id="fabBtn" aria-label="Agregar libro">+</button>
 
-    <!-- Modal para agregar/editar -->
+    <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
             <button class="modal-close" id="closeModal">✕</button>
@@ -111,6 +115,7 @@
         </div>
     </div>
 
+    <!-- 3️⃣ Scripts en orden -->
     <script src="js/supabase.js"></script>
     <script src="js/main.js"></script>
     <script src="js/biblioteca.js"></script>

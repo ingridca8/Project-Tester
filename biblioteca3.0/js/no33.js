@@ -5,12 +5,15 @@
 let currentNo33Books = [];
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔢 No.33 cargada');
     loadNo33();
     setupEventListenersNo33();
 });
 
 async function loadNo33() {
+    console.log('🔄 Cargando No.33...');
     const books = await fetchBooksFromTable('no_33');
+    console.log(`📖 ${books.length} libros en No.33`);
     currentNo33Books = books;
     renderNo33Books(books);
     populateNo33Filters(books);
@@ -18,11 +21,16 @@ async function loadNo33() {
 
 function renderNo33Books(books) {
     const container = document.getElementById('no33Container');
+    if (!container) {
+        console.error('❌ No se encontró el contenedor no33Container');
+        return;
+    }
+    
     container.innerHTML = '';
     
     if (books.length === 0) {
         container.innerHTML = `
-            <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+            <div style="text-align: center; padding: 3rem; color: var(--text-muted); grid-column: 1 / -1;">
                 <p style="font-size: 1.2rem;">📚 No hay libros en No.33</p>
             </div>
         `;
@@ -44,11 +52,13 @@ function renderNo33Books(books) {
             </div>
             ${book.notes ? `<div style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.5rem 0;">${escapeHtml(book.notes)}</div>` : ''}
             <div class="book-status ${getStatusClass(book.status)}">${escapeHtml(book.status || 'Unread')}</div>
-            <button class="toggle-status" data-id="${book.id}">Cambiar estado</button>
+            <button class="toggle-status" data-id="${book.id}">🔄 Cambiar estado</button>
         `;
         
         card.addEventListener('click', function(e) {
-            if (e.target.classList.contains('toggle-status')) return;
+            if (e.target.classList.contains('toggle-status') || e.target.closest('.toggle-status')) {
+                return;
+            }
             openEditModalNo33(book);
         });
         
@@ -65,20 +75,29 @@ function renderNo33Books(books) {
 }
 
 function setupEventListenersNo33() {
-    document.getElementById('searchInputNo33').addEventListener('input', applyNo33Filters);
-    document.getElementById('genreFilterNo33').addEventListener('change', applyNo33Filters);
-    document.getElementById('statusFilterNo33').addEventListener('change', applyNo33Filters);
+    const searchInput = document.getElementById('searchInputNo33');
+    if (searchInput) searchInput.addEventListener('input', applyNo33Filters);
     
-    document.getElementById('fabBtnNo33').addEventListener('click', function() {
-        openModalNo33();
-    });
+    const genreFilter = document.getElementById('genreFilterNo33');
+    if (genreFilter) genreFilter.addEventListener('change', applyNo33Filters);
     
-    document.getElementById('saveBookBtnNo33').addEventListener('click', saveNo33Book);
-    document.getElementById('closeModalNo33').addEventListener('click', closeModalNo33);
-    document.getElementById('modalOverlayNo33').addEventListener('click', function(e) {
-        if (e.target === this) closeModalNo33();
-    });
-    document.getElementById('deleteBookBtnNo33').addEventListener('click', deleteNo33Book);
+    const statusFilter = document.getElementById('statusFilterNo33');
+    if (statusFilter) statusFilter.addEventListener('change', applyNo33Filters);
+    
+    const fabBtn = document.getElementById('fabBtnNo33');
+    if (fabBtn) fabBtn.addEventListener('click', function() { openAddModalNo33(); });
+    
+    const saveBtn = document.getElementById('saveBookBtnNo33');
+    if (saveBtn) saveBtn.addEventListener('click', saveNo33Book);
+    
+    const closeBtn = document.getElementById('closeModalNo33');
+    if (closeBtn) closeBtn.addEventListener('click', closeModalNo33);
+    
+    const overlay = document.getElementById('modalOverlayNo33');
+    if (overlay) overlay.addEventListener('click', function(e) { if (e.target === this) closeModalNo33(); });
+    
+    const deleteBtn = document.getElementById('deleteBookBtnNo33');
+    if (deleteBtn) deleteBtn.addEventListener('click', deleteNo33Book);
 }
 
 function applyNo33Filters() {
@@ -97,13 +116,8 @@ function applyNo33Filters() {
         });
     }
     
-    if (genreFilter) {
-        filtered = filtered.filter(book => book.genre === genreFilter);
-    }
-    
-    if (statusFilter) {
-        filtered = filtered.filter(book => book.status === statusFilter);
-    }
+    if (genreFilter) filtered = filtered.filter(book => book.genre === genreFilter);
+    if (statusFilter) filtered = filtered.filter(book => book.status === statusFilter);
     
     renderNo33Books(filtered);
 }
@@ -111,13 +125,15 @@ function applyNo33Filters() {
 function populateNo33Filters(books) {
     const genres = [...new Set(books.map(b => b.genre).filter(Boolean))].sort();
     const genreSelect = document.getElementById('genreFilterNo33');
-    genreSelect.innerHTML = '<option value="">Todos los géneros</option>';
-    genres.forEach(genre => {
-        const option = document.createElement('option');
-        option.value = genre;
-        option.textContent = genre;
-        genreSelect.appendChild(option);
-    });
+    if (genreSelect) {
+        genreSelect.innerHTML = '<option value="">Todos los géneros</option>';
+        genres.forEach(genre => {
+            const option = document.createElement('option');
+            option.value = genre;
+            option.textContent = genre;
+            genreSelect.appendChild(option);
+        });
+    }
 }
 
 async function toggleNo33Status(id) {
@@ -148,23 +164,21 @@ async function toggleNo33Status(id) {
 }
 
 // Funciones de modal para No.33
-function openModalNo33(bookData = null) {
+function openAddModalNo33() {
     const overlay = document.getElementById('modalOverlayNo33');
+    if (!overlay) return;
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    if (bookData) {
-        fillNo33Form(bookData);
-        document.getElementById('modalTitleNo33').textContent = 'Editar libro';
-    } else {
-        document.getElementById('addFormNo33').reset();
-        document.getElementById('modalTitleNo33').textContent = 'Añadir libro';
-        document.getElementById('editIdNo33').value = '';
-    }
+    document.getElementById('modalTitleNo33').textContent = 'Añadir libro';
+    document.getElementById('editIdNo33').value = '';
+    document.getElementById('addFormNo33').reset();
+    const deleteBtn = document.getElementById('deleteBookBtnNo33');
+    if (deleteBtn) deleteBtn.style.display = 'none';
 }
 
 function closeModalNo33() {
     const overlay = document.getElementById('modalOverlayNo33');
+    if (!overlay) return;
     overlay.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
@@ -185,11 +199,17 @@ function fillNo33Form(book) {
 }
 
 function openEditModalNo33(book) {
+    const overlay = document.getElementById('modalOverlayNo33');
+    if (!overlay) return;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
     fillNo33Form(book);
     document.getElementById('modalTitleNo33').textContent = 'Editar libro';
-    document.getElementById('deleteBookBtnNo33').style.display = 'block';
-    document.getElementById('deleteBookBtnNo33').dataset.id = book.id;
-    openModalNo33();
+    const deleteBtn = document.getElementById('deleteBookBtnNo33');
+    if (deleteBtn) {
+        deleteBtn.style.display = 'block';
+        deleteBtn.dataset.id = book.id;
+    }
 }
 
 async function saveNo33Book() {

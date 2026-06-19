@@ -5,12 +5,15 @@
 let currentWishlist = [];
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('⭐ Wishlist cargada');
     loadWishlist();
     setupWishlistEvents();
 });
 
 async function loadWishlist() {
+    console.log('🔄 Cargando Wishlist...');
     const books = await fetchBooksFromTable('wishlist');
+    console.log(`📖 ${books.length} libros en Wishlist`);
     currentWishlist = books;
     renderWishlist(books);
     populateWishlistFilters(books);
@@ -18,11 +21,16 @@ async function loadWishlist() {
 
 function renderWishlist(books) {
     const container = document.getElementById('wishlistContainer');
+    if (!container) {
+        console.error('❌ No se encontró wishlistContainer');
+        return;
+    }
+    
     container.innerHTML = '';
     
     if (books.length === 0) {
         container.innerHTML = `
-            <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+            <div style="text-align: center; padding: 3rem; color: var(--text-muted); grid-column: 1 / -1;">
                 <p style="font-size: 1.2rem;">📖 No hay libros en tu Wishlist</p>
                 <p style="font-size: 0.9rem;">Haz clic en el botón + para agregar uno</p>
             </div>
@@ -43,7 +51,7 @@ function renderWishlist(books) {
                 ${book.editorial ? `<span>${escapeHtml(book.editorial)}</span>` : ''}
             </div>
             ${book.notes ? `<div style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.5rem 0;">${escapeHtml(book.notes)}</div>` : ''}
-            <div class="book-status" style="background: rgba(201, 168, 108, 0.15); color: var(--gold); display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; margin-top: 0.5rem;">En lista de deseos</div>
+            <div class="book-status" style="background: rgba(201, 168, 108, 0.15); color: var(--gold); display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; margin-top: 0.5rem;">⭐ En lista de deseos</div>
         `;
         
         card.addEventListener('click', function() {
@@ -55,20 +63,29 @@ function renderWishlist(books) {
 }
 
 function setupWishlistEvents() {
-    document.getElementById('searchInputWishlist').addEventListener('input', applyWishlistFilters);
-    document.getElementById('genreFilterWishlist').addEventListener('change', applyWishlistFilters);
-    document.getElementById('yearFilterWishlist').addEventListener('change', applyWishlistFilters);
+    const searchInput = document.getElementById('searchInputWishlist');
+    if (searchInput) searchInput.addEventListener('input', applyWishlistFilters);
     
-    document.getElementById('fabBtnWishlist').addEventListener('click', function() {
-        openWishlistModal();
-    });
+    const genreFilter = document.getElementById('genreFilterWishlist');
+    if (genreFilter) genreFilter.addEventListener('change', applyWishlistFilters);
     
-    document.getElementById('saveBookBtnWishlist').addEventListener('click', saveWishlistBook);
-    document.getElementById('closeModalWishlist').addEventListener('click', closeWishlistModal);
-    document.getElementById('modalOverlayWishlist').addEventListener('click', function(e) {
-        if (e.target === this) closeWishlistModal();
-    });
-    document.getElementById('deleteBookBtnWishlist').addEventListener('click', deleteWishlistBook);
+    const yearFilter = document.getElementById('yearFilterWishlist');
+    if (yearFilter) yearFilter.addEventListener('change', applyWishlistFilters);
+    
+    const fabBtn = document.getElementById('fabBtnWishlist');
+    if (fabBtn) fabBtn.addEventListener('click', function() { openWishlistAddModal(); });
+    
+    const saveBtn = document.getElementById('saveBookBtnWishlist');
+    if (saveBtn) saveBtn.addEventListener('click', saveWishlistBook);
+    
+    const closeBtn = document.getElementById('closeModalWishlist');
+    if (closeBtn) closeBtn.addEventListener('click', closeWishlistModal);
+    
+    const overlay = document.getElementById('modalOverlayWishlist');
+    if (overlay) overlay.addEventListener('click', function(e) { if (e.target === this) closeWishlistModal(); });
+    
+    const deleteBtn = document.getElementById('deleteBookBtnWishlist');
+    if (deleteBtn) deleteBtn.addEventListener('click', deleteWishlistBook);
 }
 
 function applyWishlistFilters() {
@@ -86,7 +103,6 @@ function applyWishlistFilters() {
         });
     }
     
-    // En wishlist no tenemos campo genre, pero podemos filtrar por año
     if (yearFilter) {
         filtered = filtered.filter(book => String(book.year) === yearFilter);
     }
@@ -98,33 +114,33 @@ function populateWishlistFilters(books) {
     // Años disponibles
     const years = [...new Set(books.map(b => b.year).filter(Boolean))].sort((a, b) => b - a);
     const yearSelect = document.getElementById('yearFilterWishlist');
-    yearSelect.innerHTML = '<option value="">Todos los años</option>';
-    years.forEach(year => {
-        const option = document.createElement('option');
-        option.value = year;
-        option.textContent = year;
-        yearSelect.appendChild(option);
-    });
+    if (yearSelect) {
+        yearSelect.innerHTML = '<option value="">Todos los años</option>';
+        years.forEach(year => {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearSelect.appendChild(option);
+        });
+    }
 }
 
 // Funciones de modal para Wishlist
-function openWishlistModal(bookData = null) {
+function openWishlistAddModal() {
     const overlay = document.getElementById('modalOverlayWishlist');
+    if (!overlay) return;
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    if (bookData) {
-        fillWishlistForm(bookData);
-        document.getElementById('modalTitleWishlist').textContent = 'Editar libro';
-    } else {
-        document.getElementById('addFormWishlist').reset();
-        document.getElementById('modalTitleWishlist').textContent = 'Añadir a Wishlist';
-        document.getElementById('editIdWishlist').value = '';
-    }
+    document.getElementById('modalTitleWishlist').textContent = 'Añadir a Wishlist';
+    document.getElementById('editIdWishlist').value = '';
+    document.getElementById('addFormWishlist').reset();
+    const deleteBtn = document.getElementById('deleteBookBtnWishlist');
+    if (deleteBtn) deleteBtn.style.display = 'none';
 }
 
 function closeWishlistModal() {
     const overlay = document.getElementById('modalOverlayWishlist');
+    if (!overlay) return;
     overlay.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
@@ -140,11 +156,17 @@ function fillWishlistForm(book) {
 }
 
 function openWishlistEditModal(book) {
+    const overlay = document.getElementById('modalOverlayWishlist');
+    if (!overlay) return;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
     fillWishlistForm(book);
     document.getElementById('modalTitleWishlist').textContent = 'Editar libro';
-    document.getElementById('deleteBookBtnWishlist').style.display = 'block';
-    document.getElementById('deleteBookBtnWishlist').dataset.id = book.id;
-    openWishlistModal();
+    const deleteBtn = document.getElementById('deleteBookBtnWishlist');
+    if (deleteBtn) {
+        deleteBtn.style.display = 'block';
+        deleteBtn.dataset.id = book.id;
+    }
 }
 
 async function saveWishlistBook() {
