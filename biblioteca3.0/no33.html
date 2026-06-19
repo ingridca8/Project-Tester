@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliotheca - No.33</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="nav-container">
+        <nav>
+            <button class="hamburger" aria-label="Menú">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="biblioteca.html">Biblioteca</a>
+                <a href="no33.html" class="active">No.33</a>
+                <a href="wishlist.html">Wishlist</a>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <h1 style="color: var(--gold); font-weight: 300; letter-spacing: 2px; margin-bottom: 1rem; text-align: center;">
+            🔢 No.33
+        </h1>
+
+        <div class="controls">
+            <input type="text" id="searchInputNo33" placeholder="🔍 Buscar...">
+            <select id="genreFilterNo33">
+                <option value="">Todos los géneros</option>
+            </select>
+            <select id="statusFilterNo33">
+                <option value="">Todos los estados</option>
+                <option value="Unread">No leído</option>
+                <option value="Reading">Leyendo</option>
+                <option value="Read">Leído</option>
+            </select>
+        </div>
+
+        <div id="no33Container" class="books-grid"></div>
+    </main>
+
+    <button class="fab" id="fabBtnNo33" aria-label="Agregar libro">+</button>
+
+    <!-- Modal No.33 -->
+    <div class="modal-overlay" id="modalOverlayNo33">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalNo33">✕</button>
+            <h2 id="modalTitleNo33">Añadir libro</h2>
+            
+            <form id="addFormNo33">
+                <input type="hidden" id="editIdNo33">
+                
+                <label for="titleNo33">Título *</label>
+                <input type="text" id="titleNo33" required>
+                
+                <label for="authorNo33">Autor *</label>
+                <input type="text" id="authorNo33" required>
+                
+                <label for="isbnNo33">ISBN</label>
+                <input type="text" id="isbnNo33">
+                
+                <label for="yearNo33">Año</label>
+                <input type="number" id="yearNo33">
+                
+                <label for="genreNo33">Género</label>
+                <select id="genreNo33">
+                    <option value="">Seleccionar</option>
+                    <option value="Ficción">Ficción</option>
+                    <option value="No Ficción">No Ficción</option>
+                    <option value="Poesía">Poesía</option>
+                    <option value="Ensayo">Ensayo</option>
+                    <option value="Historia">Historia</option>
+                    <option value="Filosofía">Filosofía</option>
+                    <option value="Ciencia">Ciencia</option>
+                    <option value="Arte">Arte</option>
+                    <option value="Biografía">Biografía</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                
+                <label for="statusNo33">Estado</label>
+                <select id="statusNo33">
+                    <option value="Unread">No leído</option>
+                    <option value="Reading">Leyendo</option>
+                    <option value="Read">Leído</option>
+                </select>
+                
+                <label for="editorialNo33">Editorial</label>
+                <input type="text" id="editorialNo33">
+                
+                <label for="languageNo33">Idioma</label>
+                <input type="text" id="languageNo33">
+                
+                <label for="pagesNo33">Páginas</label>
+                <input type="number" id="pagesNo33">
+                
+                <label for="gradeNo33">Calificación (1-5)</label>
+                <input type="number" id="gradeNo33" min="1" max="5">
+                
+                <label for="notesNo33">Notas</label>
+                <textarea id="notesNo33"></textarea>
+                
+                <button type="button" class="btn-save" id="saveBookBtnNo33">💾 Guardar</button>
+                <button type="button" class="btn-delete" id="deleteBookBtnNo33" style="display:none;">🗑️ Eliminar libro</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/supabase.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/no33.js"></script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+/* ========================================
+   ESTILOS PRINCIPALES - TEMA OSCURO
+   ======================================== */
+
+/* Variables de color - Tema oscuro metalero */
+:root {
+    --bg-primary: #0a0a0a;      /* Negro profundo */
+    --bg-secondary: #141414;     /* Negro más claro */
+    --bg-card: #1a1a1a;         /* Fondo de tarjetas */
+    --bg-hover: #2a2a2a;        /* Hover */
+    --text-primary: #e0d5c8;    /* Blanco roto elegante */
+    --text-secondary: #a89888;  /* Gris cálido */
+    --text-muted: #6a5f55;      /* Gris oscuro */
+    --gold: #c9a86c;            /* Dorado elegante */
+    --gold-dim: rgba(201, 168, 108, 0.15);
+    --border-color: #2a2420;    /* Borde sutil */
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ========================================
+   MENÚ DE NAVEGACIÓN - VERSIÓN OSCURA
+   ======================================== */
+
+/* Contenedor del menú - Fijo en la parte superior */
+.nav-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 2rem;
+}
+
+/* Menú interno - Centrado y con ancho máximo */
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    gap: 3rem;
+}
+
+/* Enlaces del menú */
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: var(--transition);
+    position: relative;
+    font-weight: 300;
+}
+
+/* Efecto hover y activo */
+nav a:hover {
+    color: var(--gold);
+    background: var(--gold-dim);
+}
+
+nav a.active {
+    color: var(--gold);
+}
+
+/* Línea decorativa debajo del enlace activo */
+nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 2px;
+    background: var(--gold);
+}
+
+/* ========================================
+   MENÚ HAMBURGUESA - VERSIÓN MÓVIL
+   ======================================== */
+
+/* Botón hamburguesa - Oculto en desktop */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+.hamburger:hover {
+    color: var(--gold);
+}
+
+/* Contenido del menú en móvil - Oculto por defecto */
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+/* ========================================
+   CONTENIDO PRINCIPAL
+   ======================================== */
+
+/* Espaciado para compensar el menú fijo */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 2rem 2rem;
+}
+
+/* ========================================
+   ESTADÍSTICAS - PÁGINA PRINCIPAL
+   ======================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    color: var(--gold);
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Sección de "Top" */
+.top-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.top-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.top-card h3 {
+    color: var(--gold);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.top-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.top-item:last-child {
+    border-bottom: none;
+}
+
+.top-name {
+    color: var(--text-primary);
+}
+
+.top-count {
+    color: var(--gold);
+    font-weight: bold;
+}
+
+/* ========================================
+   TARJETAS DE LIBROS - BIBLIOTECA
+   ======================================== */
+
+/* Grid de tarjetas */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Tarjeta individual */
+.book-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+}
+
+.book-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: var(--shadow);
+}
+
+/* Título del libro */
+.book-title {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+/* Autor */
+.book-author {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Metadatos */
+.book-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0.5rem 0;
+}
+
+.book-meta span {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+}
+
+/* Estado - Badge */
+.book-status {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.5rem;
+}
+
+.status-read {
+    background: rgba(201, 168, 108, 0.2);
+    color: var(--gold);
+}
+
+.status-reading {
+    background: rgba(100, 200, 100, 0.15);
+    color: #7cc97c;
+}
+
+.status-unread {
+    background: rgba(200, 100, 100, 0.15);
+    color: #c97c7c;
+}
+
+/* ========================================
+   CONTROLES - FILTROS Y BÚSQUEDA
+   ======================================== */
+
+.controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+.controls input,
+.controls select {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-family: inherit;
+    transition: var(--transition);
+    min-width: 200px;
+}
+
+.controls input:focus,
+.controls select:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.controls input::placeholder {
+    color: var(--text-muted);
+}
+
+.controls select option {
+    background: var(--bg-primary);
+}
+
+/* ========================================
+   BOTÓN FLOTANTE DE AGREGAR
+   ======================================== */
+
+.fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--gold);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 20px rgba(201, 168, 108, 0.3);
+    z-index: 900;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(201, 168, 108, 0.5);
+}
+
+/* ========================================
+   BOTÓN TOGGLE STATUS - ESPECIAL PARA BIBLIOTECA
+   ======================================== */
+
+.toggle-status {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.toggle-status:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+/* ========================================
+   MODAL - PARA EDITAR/AGREGAR
+   ======================================== */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-close:hover {
+    color: var(--gold);
+}
+
+.modal-content h2 {
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+/* Formulario dentro del modal */
+.modal-content label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-family: inherit;
+    transition: var(--transition);
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+}
+
+.modal-content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Botón de guardar en modal */
+.btn-save {
+    background: var(--gold);
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(201, 168, 108, 0.3);
+}
+
+.btn-delete {
+    background: rgba(200, 80, 80, 0.15);
+    color: #c97c7c;
+    border: 1px solid rgba(200, 80, 80, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 0.5rem;
+}
+
+.btn-delete:hover {
+    background: rgba(200, 80, 80, 0.25);
+}
+
+/* ========================================
+   RESPONSIVE - VERSIÓN MÓVIL
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* Menú hamburguesa visible */
+    .hamburger {
+        display: block;
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Menú colapsado por defecto */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        gap: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    /* Menú abierto */
+    .nav-links.open {
+        display: flex;
+    }
+
+    /* Enlaces en móvil - Ocupan todo el ancho */
+    nav a {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem;
+        border-radius: 0;
+    }
+
+    nav a.active::after {
+        width: 30%;
+    }
+
+    /* Ajustes de contenido en móvil */
+    main {
+        padding: 80px 1rem 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .top-section {
+        grid-template-columns: 1fr;
+    }
+
+    .books-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .controls input,
+    .controls select {
+        min-width: unset;
+        width: 100%;
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+
+    .fab {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 1.8rem;
+    }
+
+    .book-card {
+        padding: 1rem;
+    }
+}

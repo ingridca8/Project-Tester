@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliotheca - Estadísticas</title>
+    
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Menú de navegación -->
+    <div class="nav-container">
+        <nav>
+            <button class="hamburger" aria-label="Menú">☰</button>
+            <div class="nav-links">
+                <a href="index.html" class="active">Inicio</a>
+                <a href="biblioteca.html">Biblioteca</a>
+                <a href="no33.html">No.33</a>
+                <a href="wishlist.html">Wishlist</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Contenido principal -->
+    <main>
+        <h1 style="color: var(--gold); font-weight: 300; letter-spacing: 2px; margin-bottom: 2rem; text-align: center;">
+            📚 Mi Biblioteca
+        </h1>
+
+        <!-- Estadísticas generales -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalBooks">0</div>
+                <div class="stat-label">Total libros</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="booksRead">0</div>
+                <div class="stat-label">Libros leídos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="booksReading">0</div>
+                <div class="stat-label">Leyendo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="readPercentage">0%</div>
+                <div class="stat-label">% de lectura</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="wishlistCount">0</div>
+                <div class="stat-label">En wishlist</div>
+            </div>
+        </div>
+
+        <!-- Top autores y géneros -->
+        <div class="top-section">
+            <div class="top-card">
+                <h3>🏆 Autores más leídos</h3>
+                <div id="topAuthors"></div>
+            </div>
+            
+            <div class="top-card">
+                <h3>📖 Autores con más libros</h3>
+                <div id="topTotalAuthors"></div>
+            </div>
+            
+            <div class="top-card">
+                <h3>📂 Top 3 géneros</h3>
+                <div id="topGenres"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/supabase.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/stats.js"></script>
+</body>
+</html>
