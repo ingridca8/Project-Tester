@@ -344,20 +344,36 @@ function populateGenreFilter(id, books) {
 
 async function toggleBibliotecaStatus(id) {
     const book = bibliotecaBooks.find(b => b.id === id);
-    if (!book) return;
+    if (!book) {
+        console.error('❌ Libro no encontrado:', id);
+        return;
+    }
     
-    let next;
-    if (book.status === 'Unread') next = 'Reading';
-    else if (book.status === 'Reading') next = 'Read';
-    else next = 'Unread';
+    // Ciclo de estados
+    let nextStatus;
+    if (book.status === 'Unread' || !book.status) {
+        nextStatus = 'Reading';
+    } else if (book.status === 'Reading') {
+        nextStatus = 'Read';
+    } else if (book.status === 'Read') {
+        nextStatus = 'Unread';
+    } else {
+        nextStatus = 'Unread';
+    }
+    
+    console.log(`🔄 [Biblioteca] Cambiando estado de "${book.status}" a "${nextStatus}" para libro ${id} (${book.title})`);
     
     try {
-        await updateRecord('books', id, { status: next });
+        await updateRecord('books', id, { status: nextStatus });
+        console.log('✅ Estado actualizado en biblioteca');
+        
+        // Recargar datos
         bibliotecaBooks = await getTableData('books');
         renderBiblioteca(bibliotecaBooks);
-    } catch (e) {
-        console.error(e);
-        alert('Error al cambiar estado');
+        
+    } catch (error) {
+        console.error('❌ Error al cambiar estado:', error);
+        alert('Error al cambiar el estado del libro');
     }
 }
 
@@ -567,21 +583,37 @@ function applyNo33Filters() {
 
 async function toggleNo33Status(id) {
     const book = no33Books.find(b => b.id === id);
-    if (!book) return;
+    if (!book) {
+        console.error('❌ Libro no encontrado:', id);
+        return;
+    }
     
-    let next;
-    if (book.status === 'Unread') next = 'Reading';
-    else if (book.status === 'Reading') next = 'Read';
-    else next = 'Unread';
+    // Ciclo de estados
+    let nextStatus;
+    if (book.status === 'Unread' || !book.status) {
+        nextStatus = 'Reading';
+    } else if (book.status === 'Reading') {
+        nextStatus = 'Read';
+    } else if (book.status === 'Read') {
+        nextStatus = 'Unread';
+    } else {
+        nextStatus = 'Unread';
+    }
+    
+    console.log(`🔄 [No.33] Cambiando estado de "${book.status}" a "${nextStatus}" para libro ${id} (${book.title})`);
     
     try {
-        await updateRecord('no_33', id, { status: next });
+        await updateRecord('no_33', id, { status: nextStatus });
+        console.log('✅ Estado actualizado en No.33');
+        
+        // Recargar datos
         no33Books = await getTableData('no_33');
         renderNo33(no33Books);
         populateGenreFilter('genreFilterNo33', no33Books);
-    } catch (e) {
-        console.error(e);
-        alert('Error al cambiar estado');
+        
+    } catch (error) {
+        console.error('❌ Error al cambiar estado:', error);
+        alert('Error al cambiar el estado del libro');
     }
 }
 

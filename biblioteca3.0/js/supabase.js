@@ -81,13 +81,22 @@ async function updateRecord(tableName, id, data) {
             body: JSON.stringify(data)
         });
         
+        // Verificar si la respuesta es ok
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`❌ Error ${response.status}:`, errorText);
             throw new Error(`Error ${response.status}: ${errorText || response.statusText}`);
         }
         
-        const result = await response.json();
+        // Intentar obtener la respuesta (puede estar vacía)
+        let result = null;
+        try {
+            result = await response.json();
+        } catch (e) {
+            // Si no hay contenido, está bien
+            console.log('✅ Actualización exitosa (sin contenido de retorno)');
+        }
+        
         console.log(`✅ Actualizado en ${tableName}`);
         return result;
     } catch (error) {
