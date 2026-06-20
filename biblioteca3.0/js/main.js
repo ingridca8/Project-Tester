@@ -109,30 +109,32 @@ async function initStats() {
     console.log('📊 Cargando estadísticas...');
     
     try {
+        // SOLO obtenemos libros de la tabla 'books' para las estadísticas principales
         const books = await getTableData('books');
-        const no33 = await getTableData('no_33');
         const wishlist = await getTableData('wishlist');
         
-        console.log(`📖 Biblioteca: ${books.length}, No.33: ${no33.length}, Wishlist: ${wishlist.length}`);
+        // NO incluimos no_33 en las estadísticas principales
+        // const no33 = await getTableData('no_33');  // Comentado
         
-        const allBooks = [...books, ...no33];
+        console.log(`📖 Biblioteca: ${books.length}, Wishlist: ${wishlist.length}`);
+        console.log(`ℹ️  No.33 NO está incluido en las estadísticas`);
         
-        // Total
+        // Total - SOLO de la biblioteca principal
         const totalEl = document.getElementById('totalBooks');
-        if (totalEl) totalEl.textContent = allBooks.length;
+        if (totalEl) totalEl.textContent = books.length;
         
-        // Leídos
-        const read = allBooks.filter(b => b.status === 'Read').length;
+        // Leídos - SOLO de la biblioteca principal
+        const read = books.filter(b => b.status === 'Read').length;
         const readEl = document.getElementById('booksRead');
         if (readEl) readEl.textContent = read;
         
-        // Leyendo
-        const reading = allBooks.filter(b => b.status === 'Reading').length;
+        // Leyendo - SOLO de la biblioteca principal
+        const reading = books.filter(b => b.status === 'Reading').length;
         const readingEl = document.getElementById('booksReading');
         if (readingEl) readingEl.textContent = reading;
         
-        // Porcentaje
-        const pct = allBooks.length > 0 ? Math.round((read / allBooks.length) * 100) : 0;
+        // Porcentaje - SOLO de la biblioteca principal
+        const pct = books.length > 0 ? Math.round((read / books.length) * 100) : 0;
         const pctEl = document.getElementById('readPercentage');
         if (pctEl) pctEl.textContent = `${pct}%`;
         
@@ -140,7 +142,7 @@ async function initStats() {
         const wishEl = document.getElementById('wishlistCount');
         if (wishEl) wishEl.textContent = wishlist.length;
         
-        // Top autores leídos
+        // Top autores leídos - SOLO de la biblioteca principal
         const authorRead = {};
         books.filter(b => b.status === 'Read').forEach(b => {
             if (b.author) {
@@ -158,9 +160,9 @@ async function initStats() {
                 ).join('');
         }
         
-        // Top autores totales
+        // Top autores totales - SOLO de la biblioteca principal
         const authorTotal = {};
-        allBooks.forEach(b => {
+        books.forEach(b => {
             if (b.author) {
                 const a = b.author.trim();
                 authorTotal[a] = (authorTotal[a] || 0) + 1;
@@ -176,9 +178,9 @@ async function initStats() {
                 ).join('');
         }
         
-        // Top géneros
+        // Top géneros - SOLO de la biblioteca principal
         const genreCount = {};
-        allBooks.forEach(b => {
+        books.forEach(b => {
             if (b.genre) {
                 const g = b.genre.trim();
                 genreCount[g] = (genreCount[g] || 0) + 1;
@@ -194,7 +196,7 @@ async function initStats() {
                 ).join('');
         }
         
-        console.log('✅ Estadísticas actualizadas');
+        console.log('✅ Estadísticas actualizadas (sin incluir No.33)');
     } catch (error) {
         console.error('❌ Error en estadísticas:', error);
     }
