@@ -36,6 +36,8 @@ async function getTableData(tableName) {
 // Función para insertar
 async function insertRecord(tableName, data) {
     try {
+        console.log(`📝 Insertando en ${tableName}:`, data);
+        
         const response = await fetch(`${SUPABASE_URL}/rest/v1/${tableName}`, {
             method: 'POST',
             headers: {
@@ -47,8 +49,11 @@ async function insertRecord(tableName, data) {
             body: JSON.stringify(data)
         });
         
+        // Obtener el texto del error para más detalles
         if (!response.ok) {
-            throw new Error(`Error ${response.status}: ${response.statusText}`);
+            const errorText = await response.text();
+            console.error(`❌ Error ${response.status}:`, errorText);
+            throw new Error(`Error ${response.status}: ${errorText || response.statusText}`);
         }
         
         const result = await response.json();
@@ -63,6 +68,8 @@ async function insertRecord(tableName, data) {
 // Función para actualizar
 async function updateRecord(tableName, id, data) {
     try {
+        console.log(`🔄 Actualizando ${tableName} id=${id}:`, data);
+        
         const response = await fetch(`${SUPABASE_URL}/rest/v1/${tableName}?id=eq.${id}`, {
             method: 'PATCH',
             headers: {
@@ -75,7 +82,9 @@ async function updateRecord(tableName, id, data) {
         });
         
         if (!response.ok) {
-            throw new Error(`Error ${response.status}: ${response.statusText}`);
+            const errorText = await response.text();
+            console.error(`❌ Error ${response.status}:`, errorText);
+            throw new Error(`Error ${response.status}: ${errorText || response.statusText}`);
         }
         
         const result = await response.json();

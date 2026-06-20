@@ -620,38 +620,57 @@ function openNo33Edit(book) {
 
 async function saveNo33Book() {
     const id = document.getElementById('editIdNo33').value;
+    
+    // Recoger y limpiar datos
     const data = {
         title: document.getElementById('titleNo33').value.trim(),
         author: document.getElementById('authorNo33').value.trim(),
         isbn: document.getElementById('isbnNo33').value.trim() || null,
-        year: parseInt(document.getElementById('yearNo33').value) || null,
+        year: document.getElementById('yearNo33').value ? parseInt(document.getElementById('yearNo33').value) : null,
         genre: document.getElementById('genreNo33').value || null,
-        status: document.getElementById('statusNo33').value || 'Unread',
         editorial: document.getElementById('editorialNo33').value.trim() || null,
         language: document.getElementById('languageNo33').value.trim() || null,
-        pages: parseInt(document.getElementById('pagesNo33').value) || null,
-        grade: parseInt(document.getElementById('gradeNo33').value) || null,
-        notes: document.getElementById('notesNo33').value.trim() || null
+        pages: document.getElementById('pagesNo33').value ? parseInt(document.getElementById('pagesNo33').value) : null,
+        grade: document.getElementById('gradeNo33').value ? parseInt(document.getElementById('gradeNo33').value) : null,
+        notes: document.getElementById('notesNo33').value.trim() || null,
+        status: document.getElementById('statusNo33').value || 'Unread'
     };
     
+    console.log('📝 Datos a guardar en no_33:', data);
+    
+    // Validar campos obligatorios
     if (!data.title || !data.author) {
-        alert('Título y autor son obligatorios');
+        alert('⚠️ Título y autor son obligatorios');
+        return;
+    }
+    
+    // Validar que year sea un número válido
+    if (data.year && (isNaN(data.year) || data.year < 1000 || data.year > 9999)) {
+        alert('⚠️ El año debe ser un número válido (ej: 2020)');
         return;
     }
     
     try {
+        let result;
         if (id) {
-            await updateRecord('no_33', id, data);
+            // Actualizar
+            console.log(`🔄 Actualizando libro ${id} en no_33`);
+            result = await updateRecord('no_33', id, data);
         } else {
-            await insertRecord('no_33', data);
+            // Insertar nuevo
+            console.log('➕ Insertando nuevo libro en no_33');
+            result = await insertRecord('no_33', data);
         }
+        
+        console.log('✅ Guardado exitoso:', result);
         closeModal('modalOverlayNo33');
         no33Books = await getTableData('no_33');
         renderNo33(no33Books);
         populateGenreFilter('genreFilterNo33', no33Books);
-    } catch (e) {
-        console.error(e);
-        alert('Error al guardar');
+        
+    } catch (error) {
+        console.error('❌ Error al guardar:', error);
+        alert(`❌ Error al guardar: ${error.message || 'Revisa la consola para más detalles'}`);
     }
 }
 
