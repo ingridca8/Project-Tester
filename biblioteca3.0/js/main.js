@@ -254,7 +254,7 @@ function renderBiblioteca(books) {
             </div>
             ${book.notes ? `<div style="font-size:0.85rem;color:var(--text-secondary);margin:0.5rem 0;">${escapeHtml(book.notes)}</div>` : ''}
             <div class="book-status ${getStatusClass(book.status)}">${getStatusText(book.status)}</div>
-            /* <button class="toggle-status" data-id="${book.id}">🔄 Cambiar estado</button> */
+
         `;
         
         card.addEventListener('click', function(e) {
