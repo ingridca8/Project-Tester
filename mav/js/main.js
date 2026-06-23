@@ -110,8 +110,8 @@ async function initStats() {
     
     try {
         // SOLO obtenemos libros de la tabla 'books' para las estadísticas principales
-        const books = await getTableData('books');
-        const wishlist = await getTableData('wishlist');
+        const books = await getTableData('mav_books');
+        const wishlist = await getTableData('mav_wishlist');
         
         console.log(`📖 Biblioteca: ${books.length}, Wishlist: ${wishlist.length}`);
         
