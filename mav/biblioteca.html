@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bibliotheca - Biblioteca</title>
+    
+    <!-- 1️⃣ Primero cargar Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- 2️⃣ Luego los estilos -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <!-- Menú de navegación -->
+    <div class="nav-container">
+        <nav>
+            <button class="hamburger" aria-label="Menú">☰</button>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <a href="biblioteca.html" class="active">Biblioteca</a>
+                <a href="no33.html">No.33</a>
+                <a href="wishlist.html">Wishlist</a>
+            </div>
+        </nav>
+    </div>
+
+    <main>
+        <h1 style="color: var(--gold); font-weight: 300; letter-spacing: 2px; margin-bottom: 1rem; text-align: center;">
+            📖 Mi Biblioteca
+        </h1>
+
+        <!-- Controles -->
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar por título, autor o género...">
+            <select id="genreFilter">
+                <option value="">Todos los géneros</option>
+            </select>
+            <select id="statusFilter">
+                <option value="">Todos los estados</option>
+                <option value="Unread">No leído</option>
+                <option value="Reading">Leyendo</option>
+                <option value="Read">Leído</option>
+            </select>
+        </div>
+
+        <!-- Contenedor de libros -->
+        <div id="booksContainer" class="books-grid"></div>
+    </main>
+
+    <!-- Botón flotante -->
+    <button class="fab" id="fabBtn" aria-label="Agregar libro">+</button>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">✕</button>
+            <h2 id="modalTitle">Añadir libro</h2>
+            
+            <form id="addForm">
+                <input type="hidden" id="editId">
+                
+                <label for="title">Título *</label>
+                <input type="text" id="title" required>
+                
+                <label for="author">Autor *</label>
+                <input type="text" id="author" required>
+                
+                <label for="isbn">ISBN</label>
+                <input type="text" id="isbn">
+                
+                <label for="year">Año</label>
+                <input type="number" id="year">
+                
+                <label for="genre">Género</label>
+                <select id="genre">
+                    <option value="">Seleccionar</option>
+                    <option value="Ficción">Ficción</option>
+                    <option value="No Ficción">No Ficción</option>
+                    <option value="Poesía">Poesía</option>
+                    <option value="Ensayo">Ensayo</option>
+                    <option value="Historia">Historia</option>
+                    <option value="Filosofía">Filosofía</option>
+                    <option value="Ciencia">Ciencia</option>
+                    <option value="Arte">Arte</option>
+                    <option value="Biografía">Biografía</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                
+                <label for="status">Estado</label>
+                <select id="status">
+                    <option value="Unread">No leído</option>
+                    <option value="Reading">Leyendo</option>
+                    <option value="Read">Leído</option>
+                </select>
+                
+                <label for="editorial">Editorial</label>
+                <input type="text" id="editorial">
+                
+                <label for="language">Idioma</label>
+                <input type="text" id="language">
+                
+                <label for="pages">Páginas</label>
+                <input type="number" id="pages">
+                
+                <label for="grade">Calificación (1-5)</label>
+                <input type="number" id="grade" min="1" max="5">
+                
+                <label for="notes">Notas</label>
+                <textarea id="notes"></textarea>
+                
+                <button type="button" class="btn-save" id="saveBookBtn">💾 Guardar</button>
+                <button type="button" class="btn-delete" id="deleteBookBtn" style="display:none;">🗑️ Eliminar libro</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3️⃣ Scripts en orden -->
+    <script src="js/supabase.js"></script>
+    <script src="js/main.js"></script>
+    
+</body>
+</html>
