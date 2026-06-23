@@ -94,8 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
         initStats();
     } else if (page === 'biblioteca') {
         initBiblioteca();
-    } else if (page === 'no33') {
-        initNo33();
     } else if (page === 'wishlist') {
         initWishlist();
     }
